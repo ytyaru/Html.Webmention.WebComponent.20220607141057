@@ -1,0 +1,37 @@
+@charset "utf-8";
+/*
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    --line-of-chars:40;
+    font-size: calc(100vw / (var(--line-of-chars)));
+}
+img.icon {
+    width: 1em;
+    height: 1em;
+}
+*/
+#text {
+  width: 40em;
+  height: 4em;
+  padding: 0.25em;
+}
+#export-code {
+  width: 20em;
+  height: 4em;
+  padding: 0.25em;
+}
+kbd {
+    font-family: Consolas, "Lucida Console", monospace;
+    display: inline-block;
+    padding: 0.25em;
+    border-radius: 0.25em;
+    background: #eee;
+    box-shadow: 1px 1px 1px #777;
+}
+footer, footer iframe, footer a, footer img {
+    text-align: center;
+    vertical-align: middle;
+}
