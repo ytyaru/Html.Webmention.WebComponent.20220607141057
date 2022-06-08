@@ -180,6 +180,7 @@ class WebMention {
         this.rsvp = rsvp
         this.bugIso = new BugIsoEscape()
         this.API_URL = 'https://webmention.io/api/mentions.jf2'
+        this._addressRegExp = /[a-zA-Z0-9]{34,}/g
     }
     async make() {
         this.dateDiff.Base = new Date()
@@ -293,7 +294,15 @@ class WebMention {
     }
     #commentTypeA(child) { // 人、日時、コメント（サーバが返すpublished日時テキストが不統一で正しくISO8601でないからバグる！）
         const content = child.content.html || child.content.text
-        return `<div class="mention"><div class="mention-meta">${this.#author(child.author)}　<span title="${child.publishedYmdhms}">${child.publishedElapsed}</span>　<span title="${this.#getMentionTypeName(child)}" class="mention-url"><a href="${child.url}" target="_blank" rel="noopener noreferrer" class="mention-url">${this.#getMentionTypeEmoji(child)}</a></span></div><div>${content}</div></div>`
+        return `<div class="mention"><div class="mention-meta">${this.#author(child.author)}　<span title="${child.publishedYmdhms}">${child.publishedElapsed}</span>　<span title="${this.#getMentionTypeName(child)}" class="mention-url"><a href="${child.url}" target="_blank" rel="noopener noreferrer" class="mention-url">${this.#getMentionTypeEmoji(child)}</a></span>　${this.#makeMpurseSendButton(child.content.text)}</div><div>${content}</div></div>`
+    }
+    #makeMpurseSendButton(content) { // コメント内にアドレスらしき文字列があれば投げモナボタンを配置する
+        console.debug(content)
+        console.debug(this._addressRegExp)
+        const founds = content.match(this._addressRegExp)
+        console.debug(founds)
+        if (founds) { return `<mpurse-send-button img-size="32" amount="0.00114114" to="${founds[0]}"></mpurse-send-button>` }
+        return ''
     }
     #getMentionTypeEmoji(child) {
         switch(child['wm-property']) {
