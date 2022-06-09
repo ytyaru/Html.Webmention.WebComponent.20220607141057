@@ -128,7 +128,7 @@ button:focus, button:focus img {
             }
         }
         // マストドンAPI oauth/authorize でリダイレクトされた場合（認証に成功した場合）
-        else if (url.searchParams.has('code') && url.searchParams.get('domain')) {
+        else if (url.searchParams.has('code') && url.searchParams.has('domain')) {
             const domain = url.searchParams.get('domain') // mstdn.jp, pawoo.net, ...
             const tooter = new Tooter(domain)
             const code = url.searchParams.get('code')
